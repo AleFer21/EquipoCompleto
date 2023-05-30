@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-image: url("../static.images/cancha.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+  
+.form-control {
+    padding: 10px;
+}
+
+.card {
+    text-align: center;
+}
