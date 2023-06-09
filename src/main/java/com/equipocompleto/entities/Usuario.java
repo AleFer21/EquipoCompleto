@@ -18,7 +18,7 @@ public class Usuario implements Serializable {
     private Integer id;
     
     private String nombre;
-    private String mail;
+    private String email;
     private String password;
     
     @OneToOne

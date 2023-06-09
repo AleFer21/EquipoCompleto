@@ -1,0 +1,9 @@
+.fondo {
+    background-image: url("../images/cesped.png");
+    background-repeat: repeat;
+}
+
+.video {
+    width: 500px;
+    height: 300px;
+}

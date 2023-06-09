@@ -17,42 +17,22 @@
                     <h3 class="mb-4 text-center font-weight-bold">
                         Registro
                     </h3>
-                    <form class="formulario" th:action="@{/jugador/registrarJugador}" method="POST" enctype="multipart/form-data">
+                    <form class="formulario" th:action="@{/admin/registrarAdmin}" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" name="nombre" required>
                         </div>
                         <div class="form-group">
-                            <label for="mail">Email</label>
+                            <label for="email">Email</label>
                             <input type="email" class="form-control" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Telefono</label>
-                            <input type="tel" class="form-control" name="telefono" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ubicacion">Ubicacion</label>
-                            <input type="text" class="form-control" name="ubicacion" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="descripcion">Descripcion</label>
-                            <input type="text" class="form-control" name="descripcion" required>
                         </div>
                         <div class="form-group">
                             <label for="fotoPerfil">Foto de Perfil</label>
                             <input type="file" class="form-control" name="fotoPerfil" required>
                         </div>
                         <div class="form-group">
-                            <label for="videos">Videos</label>
-                            <input type="file" class="form-control" name="videos" required multiple>
-                        </div>
-                        <div class="form-group">
                             <label for="password">Contraseña</label>
                             <input type="password" class="form-control" name="password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password2">Repetir Contraseña</label>
-                            <input type="password" class="form-control" name="password2" required>
                         </div>
                         <div class="form-group d-grid gap-2">
                             <button type="submit" class="btn btn-secondary btn-block">Registrarse</button>

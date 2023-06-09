@@ -3,7 +3,6 @@ html, body {
 }
 
 body {
-    background-image: url("../static.images/cancha.jpg");
     background-size: cover;
     background-position: center;
 }
@@ -11,11 +10,22 @@ body {
 .form-group {
     margin-bottom: 10px;
 }
-  
+
 .form-control {
     padding: 10px;
 }
 
 .card {
     text-align: center;
+}
+
+.fondo {
+    background-image: url("../images/fulbo.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.contenido {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

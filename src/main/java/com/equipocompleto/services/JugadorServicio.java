@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,15 +28,15 @@ public class JugadorServicio {
     private VideoServicio videoServicio;
 
     @Transactional
-    public void crearJugador(String nombre, String mail, String password, MultipartFile archivo, long telefono, String ubicacion,
+    public void crearJugador(String nombre, String email, String password, String password2, MultipartFile fotoPerfil, long telefono, String ubicacion,
             String descripcion, List<MultipartFile> videos) throws Exception {
-        validar(nombre, mail, password, archivo, telefono, ubicacion, descripcion, videos);
+        validar(nombre, email, password, password2, fotoPerfil, telefono, ubicacion, descripcion, videos);
         Jugador jugador = new Jugador();
         jugador.setNombre(nombre);
-        jugador.setMail(mail);
-//        jugador.setPassword(new BCryptPasswordEncoder().encode(password));
-        Imagen fotoPerfil = imagenServicio.guardarImagen(archivo);
-        jugador.setFotoPerfil(fotoPerfil);
+        jugador.setEmail(email);
+        jugador.setPassword(new BCryptPasswordEncoder().encode(password));
+        Imagen imagen = imagenServicio.guardarImagen(fotoPerfil);
+        jugador.setFotoPerfil(imagen);
         jugador.setTelefono(telefono);
         jugador.setUbicacion(ubicacion);
         jugador.setDescripcion(descripcion);
@@ -55,21 +55,21 @@ public class JugadorServicio {
     }
 
     @Transactional
-    public void actualizarJugador(int id, String nombre, String mail, String password, MultipartFile archivo, long telefono, String ubicacion,
+    public void actualizarJugador(int id, String nombre, String email, String password, String password2, MultipartFile fotoPerfil, long telefono, String ubicacion,
             String descripcion, List<MultipartFile> videos) throws Exception {
-        validar(nombre, mail, password, archivo, telefono, ubicacion, descripcion, videos);
+        validar(nombre, email, password, password2, fotoPerfil, telefono, ubicacion, descripcion, videos);
         Optional<Jugador> respuesta = jugadorRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Jugador jugador = respuesta.get();
             jugador.setNombre(nombre);
-            jugador.setMail(mail);
+            jugador.setEmail(email);
 //            jugador.setPassword(new BCryptPasswordEncoder().encode(password));
             int idImagen = 0;
             if (jugador.getFotoPerfil() != null) {
                 idImagen = jugador.getFotoPerfil().getIdImagen();
             }
-            Imagen fotoPerfil = imagenServicio.actualizarImagen(archivo, idImagen);
-            jugador.setFotoPerfil(fotoPerfil);
+            Imagen imagen = imagenServicio.actualizarImagen(fotoPerfil, idImagen);
+            jugador.setFotoPerfil(imagen);
             jugador.setTelefono(telefono);
             jugador.setUbicacion(ubicacion);
             jugador.setDescripcion(descripcion);
@@ -117,18 +117,21 @@ public class JugadorServicio {
         return jugadorRepositorio.getOne(id);
     }
 
-    private void validar(String nombre, String mail, String password, MultipartFile archivo, long telefono, String ubicacion,
+    private void validar(String nombre, String email, String password, String password2, MultipartFile fotoPerfil, long telefono, String ubicacion,
             String descripcion, List<MultipartFile> videos) throws Exception {
         if (nombre == null || nombre.isEmpty()) {
             throw new Exception("Por favor ingrese su nombre.");
         }
-        if (mail == null || mail.isEmpty()) {
+        if (email == null || email.isEmpty()) {
             throw new Exception("Por favor ingrese su mail.");
         }
-        if (password == null || password.isEmpty()) {
-            throw new Exception("Por favor ingrese una contraseña.");
+        if (password == null || password.isEmpty() || password.length() <= 7) {
+            throw new Exception("Por favor ingrese una contraseña de 8 caracteres o mas.");
         }
-        if (archivo == null) {
+        if (!password.equals(password2)) {
+            throw new Exception("Las contraseñas deben ser iguales.");
+        }
+        if (fotoPerfil == null) {
             throw new Exception("Por favor agregue una foto de perfil.");
         }
         if (telefono < 0) {
